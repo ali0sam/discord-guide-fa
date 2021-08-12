@@ -349,7 +349,7 @@ module.exports = {
 	name: 'ping',
 	description: 'Replies with Pong!',
 	async execute(interaction) {
-		await interaction.reply('man ba coommad handler kar mikonm va az folder ``coomands`` va file ``ping.js`` miam va be shoma migam [Pong!] :)');
+		await interaction.reply('man ba command handler kar mikonm va az folder ``commands`` va file ``ping.js`` miam va be shoma migam [Pong!] :)');
 	},
 };
 ```
@@ -418,7 +418,7 @@ client.login(token);
 
 <br>			
 
-<img src="https://cdn.discordapp.com/attachments/826890223916154903/875344307870113792/unknown.png" />
+<img src="https://cdn.discordapp.com/attachments/826890223916154903/875351539240271882/unknown.png" />
 <br>
 
 همونطور که میبینید ما تونستیم با موفقیت 2 تا کار خوب و مهم توی کد هامون انجام بدیم 
