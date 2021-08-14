@@ -70,8 +70,8 @@ https://user-images.githubusercontent.com/69610848/129366135-142aee6a-1a22-4353-
 - **بعد از نصب ادیتور میرسیم به نصب پکیج های ``npm`` که خیلی اصلی و مهم هستن**
 	- برای نصب پکیج یک فولدر برای پروژه میسازیم که اونجا پکیج هارو نصب بکنیم و فایل هارو  بزاریم
 	- بعد از ساخت فولدر کافیه یه ترمینال از اون پوشه باز بکنیم که شروع کنیم به نصب کامند ها که خب این توی ``vscode`` خیلی راحته
-	- ``npm install discord.js @discordjs/rest discord-api-types``
-	- در واقع ما با استفاده از دستور بالا 3 عدد پکیج اصلی که بهشون نیاز داریم رو نصب میکنیم
+	- ``npm install discord.js @discordjs/rest discord-api-types @discordjs/builders``
+	- در واقع ما با استفاده از دستور بالا 4 عدد پکیج اصلی که بهشون نیاز داریم رو نصب میکنیم
 	
 https://user-images.githubusercontent.com/69610848/129415347-6337ee72-266b-4b6f-9dd4-061201de78b1.mp4
 
@@ -312,6 +312,8 @@ await interaction.reply({ content: 'Pong!', ephemeral: true });
 ولی این کار در یه پروژه ای استاندارد توصیه نمیشه و بهتره شما یه کانفیگ فایل داشته باشید که اطلاعات مهمی که نیاز دارید توی اون تعریف بشه و بعد بتونید به راحتی اونارو تو کد خودتون استفاده بکنید
 <br>
 
+# 📔 کانفیگ فایل / .env
+
 برای استفاد از یه کانفیگ ها توی یه کد روش های زیادی هست ولی ما میخایم اینجا از پکیج ``dotenv`` استفاده بکنیم که بعدا همه جوره به کارمون میاد
 <br>
 	
@@ -335,15 +337,46 @@ GUILD_ID=763773694542126274
 </div>
 
 <br>
-	
-بعد از نوشتن این 3 تا مغیر فایل رو ذخیره میکنیم و میریم سراغ فایل ``register-command.js`` تا یکمی عوضش کنیم
+	# 📃 کامند هندلر
+⚪ **بعد از اینکه دیتا هارو ذخیره کردیم دیگه فعلا باهاشون کاری نداریم و میریم سراغ ساخت یه فولدر رو ساخت فایل جدا برای کامند**
 <br>
+
+
+- **یه فولدر بسازید به نام ``commands`` و یه فایل هم توش بسازید به نام ``ping.js`` و کد زیر رو توش قرار بدید و سیو کنید**
+
+
+<div dir="ltr">
+
+```javascript
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('ping')
+		.setDescription('ek command ping az command handler ke toy [/] command ha ham register mishe :D'),
+	async execute(interaction) {
+		await interaction.reply('man ba command handler kar mikonm va az folder ``commands`` va file ``ping.js`` miam va be shoma migam [Pong!] :)');
+	},
+};
+```
+
+</div>
+<br>
+
+- ❗ **یادتون باشه که این پکیج رو حتما نصب کرده باشید**
+	- ``npm i @discordjs/builders``
+
+- ❓ **حالا با این عوض کردن کد ما چیکار کردیم؟**
+	- ما با این کار دیگه نیاز نیست دونه دونه اسلش کامند هارو به سرور اضافه بکنیم و هر دستوری رو که به صورت کد بالا براش یه فایل بسازیم و توی پوشه ای کامندز بزاریم رو میتونید مستقیم به اسلش کامند ها اضافه بکنیم
+
+- قبلش نیازه یکمی توی کد ``register-command.js`` دست ببریم و عوض کنیمش
 
 <div dir="ltr">
 
 ```javascript
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
+const fs = require('fs');
 // ezafe kardn [dotenv] be file
 require("dotenv").config();
 
@@ -352,37 +385,40 @@ let clientID = process.env.CLIENT_ID
 let token = process.env.TOKEN
 let guildID = process.env.GUILD_ID
 
+// def kardn e command ha az folder [commands]
+const commands = [];
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 
-const commands = [{
-  name: 'ping',
-  description: 'in command dar javab mige [Pong!] :)'
-}]; 
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	commands.push(command.data.toJSON());
+}
 
 const rest = new REST({ version: '9' }).setToken(token);
 
 (async () => {
-  try {
-    console.log('dar hal ezafe kardn (/) command');
+	try {
+		console.log('Started refreshing application (/) commands.');
 
-    await rest.put(
-      Routes.applicationGuildCommands(clientID, guildID),
-      { body: commands },
-    );
-      // for global register 
-      // await rest.put(Routes.applicationCommands(CLIENT_ID),{ body: commands },);
+		await rest.put(
+			Routes.applicationGuildCommands(clientID, guildID),
+			{ body: commands },
+		);
 
-    console.log('(/) command be server ezafe shod!');
-  } catch (error) {
-    console.error(error);
-  }
+		console.log('Successfully reloaded application (/) commands.');
+	} catch (error) {
+		console.error(error);
+	}
 })();
 ```
 
 </div>
-<br>
 
-با تغیراتی که توی کد بالا به وجود اوردیم دیگه دیتا ها از فایل ``env.`` گرفته میشه و دیگه نیازی نیست توی فایل اصلی تعریفشون کنیم
+- **اگه به کد بالا دقت کرده باشید ما الان 2 تا کار انجام دادیم**
+	- اولیش اینه که الان با ران کردن این فایل تمام فایل های کامند هایی که توی پوشه ``commands`` ساختیم اتوماتیک ساخته میشه و به اسلش کامند های سرور اضافه میشه
+	- دومیش هم اینه که ما دیگه نیاز نیست چیزایی مثل توکن و سرور ایدی و ایدی بات رو توی این کد تعریف بکنیم به صورت مستقیم و اونا رو از فایل ``env.`` میگیریم
+
 <br>
 
 **حالا نوبت فایل ``bot.js`` هستش که باید بهینه بشه**
@@ -394,56 +430,16 @@ const rest = new REST({ version: '9' }).setToken(token);
 دلیلش هم اینه که فرض کنید شما یه بات دارید با بیش از 50 تا دستور و اگه قصد داشته باشید هر بار یکی از دستورات رو ادیت بدید کار خیلی سختی خواهد بود چون باید همش توی یه فایل بزرگ و شلوغ این ور و اون ور برید تا بتونید تیکه تیکه اون دستور رو ادیت بدید
 <br>
 
-- پس ما اینجا از یک متد به نام **کامند هندلر** استفاده میکنیم
-
-<br>
-
-برای شروع کار با کامند هنلدر اول نیازه که یک پوشه برای فایل های کامند ها ایجاد بکنید
-<br>
-
-پس ما به صورت خیلی ساده یه پوشه به نام ``commands`` ایجاد میکنیم
-<br>
-
-در مرحله بعد میریم سراغ ساخت فایل برای یک کامند که ما از اون جایی که توی اموزش بالا کامند پینگ رو داشتیم برای کامند پینگ یک فایل میسازیم به نام ``ping.js``
-<br>
-
-توجه داشته باشید که فایل ``ping.js`` رو توی پوشه ``commands`` قرار بدید
-<br>
-
-و بعد کد زیر رو توی فایل مینویسیم
-<br>
-
-<div dir="ltr">
-
-```javascript
-module.exports = {
-	name: 'ping',
-	description: 'Replies with Pong!',
-	async execute(interaction) {
-		await interaction.reply('man ba command handler kar mikonm va az folder ``commands`` va file ``ping.js`` miam va be shoma migam [Pong!] :)');
-	},
-};
-```
-
-</div>
-<br>
-
-بعد از اینکه فایل رو سیو کردیم وقتشه یه تغییر اساسی توی فایل اصلی یعنی ``bot.js`` ایجاد بکنیم
-<br>
-
 برای راحتی بهتر تمامی کد های توی فایل ``bot.js`` رو پاک کنید و با کد پایین جای گزین بکنید
 <br>
 
 <div dir="ltr">
 
 ```javascript
-const { Client, Intents,Collection } = require('discord.js');
+const { Client, Intents, Collection } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-// [fs] baray file sync az folder [commands]
 const fs = require('fs');
-// dotenv baray daryaft data az config
 require("dotenv").config();
-// var kardn data e ke az [.env] grftim va tabdil on be variable [token]
 let token = process.env.TOKEN
 
 client.on('ready', () => {
@@ -458,16 +454,18 @@ for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	// set a new item in the Collection
 	// with the key as the command name and the value as the exported module
-	client.commands.set(command.name, command);
+	client.commands.set(command.data.name, command);
 }
 
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
-	if (!client.commands.has(interaction.commandName)) return;
+	const { commandName } = interaction;
+
+	if (!client.commands.has(commandName)) return;
 
 	try {
-		await client.commands.get(interaction.commandName).execute(interaction);
+		await client.commands.get(commandName).execute(interaction);
 	} catch (error) {
 		console.error(error);
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
@@ -503,22 +501,7 @@ client.login(token);
 🔵 **امبد مسیج یه نوع پیامه ولی قشنگ تر مرتب تر و توی یک کادر قرار داره و به نظر بهتر میاد**
 
 
-- خب اول از همه میایم یه اسلش کامند برای امبد مسیجی که میخایم ارسال بکنیم میسازیم
-
-<div dir="ltr">
-
-```javascript
-const commands = [{
-  name: 'embed',
-  description: 'in command be ma e embed message neshon mide.'
-}]; 
-```
-
-</div>
-
-![image](https://user-images.githubusercontent.com/69610848/129449865-64ae49b2-4fe4-4a25-8030-dcabe9965989.png)
-
-- بعد از اضافه کردن دستور میریم سراغ ساختنش
+- ساخت دستور رو شروع میکنیم
 	- همون طور که میدونید فقط کافیه برید توی پوشه commands و یک فایل بسازید برای کامند که من اینجا اسم فایل رو گذاشتم ``embed.js`` شما هرچی دوست دارید بزارید
 	- بعدش کافیه کد پایین رو توی فایل وارد بکنید
 
@@ -527,10 +510,12 @@ const commands = [{
 
 ```javascript
 const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
-    name: 'embed',
-    description: 'in command be ma 1 embed neshon mide :D',
+    data: new SlashCommandBuilder()
+    .setName('embed')
+		.setDescription('be ma e embed mide!'),
     async execute(interaction) {
 				// embed
 				const embed = new MessageEmbed()
@@ -559,8 +544,10 @@ module.exports = {
 
 </div>
 
+- ⚪ بعد از سیو کردن فایل بالا مثل مثال کامند ریجستر که برای کامند هندلر توی بالا دیدید کامندش رو به سرور اضافه میکنید
 
-- حالا کافیه فایل رو سیو بکنیم و ربات رو ران بکنیم
+
+- حالا ربات رو ران بکنیم
 	- ``node bot.js``
 
 
