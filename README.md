@@ -481,16 +481,73 @@ client.login(token);
 * **انتقال متغیر های مودرنیاز به یک فایل جدا و فراخونی اونا به درون کد های اصلی**
 * **جدا کردن دستورات و اتقال اونها به یک پوشه ای جدا و فایل های جدا برای مدیریت و نظم بهتر**
 
+# 📇 امبد مسیج / Embed Message
+	
+🔵 **امبد مسیج یه نوع پیامه ولی قشنگ تر مرتب تر و توی یک کادر قرار داره و به نظر بهتر میاد**
 
 
+- خب اول از همه میایم یه اسلش کامند برای امبد مسیجی که میخایم ارسال بکنیم میسازیم
+
+<div dir="ltr">
+
+```javascript
+const commands = [{
+  name: 'embed',
+  description: 'in command be ma e embed message neshon mide.'
+}]; 
+```
+
+</div>
+
+![image](https://user-images.githubusercontent.com/69610848/129449865-64ae49b2-4fe4-4a25-8030-dcabe9965989.png)
+
+- بعد از اضافه کردن دستور میریم سراغ ساختنش
+	- همون طور که میدونید فقط کافیه برید توی پوشه commands و یک فایل بسازید برای کامند که من اینجا اسم فایل رو گذاشتم ``embed.js`` شما هرچی دوست دارید بزارید
+	- بعدش کافیه کد پایین رو توی فایل وارد بکنید
 
 
+<div dir="ltr">
+
+```javascript
+const { MessageEmbed } = require('discord.js');
+
+module.exports = {
+    name: 'embed',
+    description: 'in command be ma 1 embed neshon mide :D',
+    async execute(interaction) {
+				// embed
+				const embed = new MessageEmbed()
+                .setColor('#bd282d')
+                .setTitle('be in text migan [title]')
+                .setURL('https://github.com/ali0sam/discord-guide-fa')
+                .setAuthor('be in text migan [author]', 'https://cdn.discordapp.com/attachments/826890223916154903/876116512803553330/AYAYA.png', 'https://github.com/')
+                .setDescription('text text text text!')
+                .setThumbnail('https://cdn.discordapp.com/attachments/826890223916154903/876115837013069854/SuchMeme.png')
+                .addFields(
+                    { name: 'Regular field title', value: 'Some value here' },
+                    { name: '\u200B', value: '\u200B' }, // inja vase in fild haro ba [\u200B] por kardin chon injori 1 field khali mishe va mire badi
+                    { name: 'Inline field title', value: 'Some value here', inline: true },
+                    { name: 'Inline field title', value: 'Some value here', inline: true },
+                )
+                .addField('Inline field title', 'Some value here', true) // injori ham mitonid field tarif konid vali model bala nazm behtari dare
+                .setImage('https://cdn.discordapp.com/attachments/826890223916154903/876115904038064138/Valorant_KAY-O-Trailer-1024x576.jpg')
+                .setTimestamp() 
+                .setFooter('Some footer text here', 'https://cdn.discordapp.com/attachments/826890223916154903/876116512803553330/AYAYA.png');
 
 
+		return interaction.reply({content: 'inja ro negah kon, e embed message!', embeds: [embed] });
+	},
+};
+```
+
+</div>
 
 
+- حالا کافیه فایل رو سیو بکنیم و ربات رو ران بکنیم
+	- ``node bot.js``
 
 
+https://user-images.githubusercontent.com/69610848/129451238-1d303c18-92a1-4a82-bf72-e30fa74dbc32.mp4
 
 
 
