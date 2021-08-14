@@ -1,8 +1,10 @@
 const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {
-    name: 'embed',
-    description: 'in command be ma 1 embed neshon mide :D',
+    data: new SlashCommandBuilder()
+    .setName('embed')
+		.setDescription('be ma e embed mide!'),
     async execute(interaction) {
 				// embed
 				const embed = new MessageEmbed()
