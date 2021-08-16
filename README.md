@@ -51,6 +51,10 @@
 
 [📇 امبد مسیج / Embed Message](https://github.com/ali0sam/discord-guide-fa#-%D8%A7%D9%85%D8%A8%D8%AF-%D9%85%D8%B3%DB%8C%D8%AC--embed-message)
 
+[🔳 دکمه / button](https://github.com/ali0sam/discord-guide-fa#-%D8%AF%DA%A9%D9%85%D9%87--button)
+
+[💂‍♂️ کالکتور](https://github.com/ali0sam/discord-guide-fa#%EF%B8%8F-%DA%A9%D8%A7%D9%84%DA%A9%D8%AA%D9%88%D8%B1)
+
 
 # ❕ چطور یک ربات بسازیم
 
