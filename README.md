@@ -622,7 +622,8 @@ module.exports = {
 - بعد از این فقط کافیه فایل رو سیو بکنیم و یبار کامند های سرور رو با فایل ``register-command.js`` ذخیره بکنیم و ربات رو ران کنیم
 	- ``node bot.js``
 
-	VIDEO HERE!!!
+https://user-images.githubusercontent.com/69610848/129631530-ccb8d87f-4b07-48f9-b450-646db345e4c6.mp4
+
 
 
 <br>
@@ -644,6 +645,11 @@ module.exports = {
 ```
 
 </div>
+
+<br>
+
+https://user-images.githubusercontent.com/69610848/129631692-c8cc6a44-8c8b-4f90-afee-062634e6e0e9.mp4
+
 
 - 😃 **نظرت راجب یه ایموجی به همراه دکمه چیه؟**
 	- ``.setEmoji()``
@@ -680,6 +686,8 @@ module.exports = {
 
 </div>
 
+https://user-images.githubusercontent.com/69610848/129631908-a52a3485-fb47-4d01-9bf9-e349b81656de.mp4
+
 - ⚠ حتما هم حواستون باشه که بات توی اون سرور که ایموجی مال اونه باشه
 
 <br>
@@ -714,7 +722,7 @@ module.exports = {
                 .setCustomId('primary')
                 .setLabel('test')
                 .setStyle('PRIMARY')
-                .setEmoji('851588633421152267'),
+                .setEmoji('🎉'),
                 );
 // collector
 const filter = i => i.customId === 'primary' && i.user.id === '575933571186032641';
@@ -748,7 +756,8 @@ collector.on('end', collected => console.log(`Collected ${collected.size} items`
 	- و در اخر هم کد زیر وجود داره که میاد بعد از تموم شدن تایم محاسبه میکنه که چند تا دکمه از کالکتور کلیک شده
 	- ``collector.on('end', collected => console.log(`Collected ${collected.size} items`));``
 
-VIDEO HERE!!!
+
+https://user-images.githubusercontent.com/69610848/129632141-4c500d0f-9108-469b-9ae6-012ca5a36d84.mp4
 
 
 -  **استایل دکمه ها**
@@ -818,6 +827,9 @@ module.exports = {
 ```
 
 </div>
+
+
+https://user-images.githubusercontent.com/69610848/129632247-96c5b553-a8e2-4ab3-9602-5db016e26037.mp4
 
 
 > - ❗ **یه نکته هم اینجا هست اینه که دکمه های استایل ``LINK`` نباید ``setCustomId().`` داشته باشن و فقط میتونید از ``setUrl().`` توش استفاده بکنید**
