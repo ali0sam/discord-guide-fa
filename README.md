@@ -33,6 +33,24 @@
   پس صاف بشینید و خوب مثال هارو **ببینید** **یاد بگیرید** و ازشون کلی ایده های خفن بگیرید و ببرید توی ادیتور هاتون که بتونید چیزای قشنگ خلق بکنید🎇
 
 # 😃خب بیا شروع کنیم
+[❕ چطور یک ربات بسازیم](https://github.com/ali0sam/discord-guide-fa#-%DA%86%D8%B7%D9%88%D8%B1-%DB%8C%DA%A9-%D8%B1%D8%A8%D8%A7%D8%AA-%D8%A8%D8%B3%D8%A7%D8%B2%DB%8C%D9%85)
+
+[❕چطور رباتی که ساختیم رو به سرور خودمون اضافه بکنیم](https://github.com/ali0sam/discord-guide-fa#%DA%86%D8%B7%D9%88%D8%B1-%D8%B1%D8%A8%D8%A7%D8%AA%DB%8C-%DA%A9%D9%87-%D8%B3%D8%A7%D8%AE%D8%AA%DB%8C%D9%85-%D8%B1%D9%88-%D8%A8%D9%87-%D8%B3%D8%B1%D9%88%D8%B1-%D8%AE%D9%88%D8%AF%D9%85%D9%88%D9%86-%D8%A7%D8%B6%D8%A7%D9%81%D9%87-%D8%A8%DA%A9%D9%86%DB%8C%D9%85)
+
+[📑 چه چیزایی رو باید نصب کنیم؟](https://github.com/ali0sam/discord-guide-fa#-%DA%86%D9%87-%DA%86%DB%8C%D8%B2%D8%A7%DB%8C%DB%8C-%D8%B1%D9%88-%D8%A8%D8%A7%DB%8C%D8%AF-%D9%86%D8%B5%D8%A8-%DA%A9%D9%86%DB%8C%D9%85)
+
+[👨‍💻 ساخت اولین کامند](https://github.com/ali0sam/discord-guide-fa#-%D8%B3%D8%A7%D8%AE%D8%AA-%D8%A7%D9%88%D9%84%DB%8C%D9%86-%DA%A9%D8%A7%D9%85%D9%86%D8%AF)
+
+[⚪ Ephemeral Message](https://github.com/ali0sam/discord-guide-fa#-ephemeral-message)
+
+[🚀یه پروژه همیشه کوچیک نمیمونه!](https://github.com/ali0sam/discord-guide-fa#%DB%8C%D9%87-%D9%BE%D8%B1%D9%88%DA%98%D9%87-%D9%87%D9%85%DB%8C%D8%B4%D9%87-%DA%A9%D9%88%DA%86%DB%8C%DA%A9-%D9%86%D9%85%DB%8C%D9%85%D9%88%D9%86%D9%87)
+
+[📔 کانفیگ فایل / .env](https://github.com/ali0sam/discord-guide-fa#-%DA%A9%D8%A7%D9%86%D9%81%DB%8C%DA%AF-%D9%81%D8%A7%DB%8C%D9%84--env)
+
+[🚲 MessageActionRow](https://github.com/ali0sam/discord-guide-fa#-messageactionrow)
+
+[📇 امبد مسیج / Embed Message](https://github.com/ali0sam/discord-guide-fa#-%D8%A7%D9%85%D8%A8%D8%AF-%D9%85%D8%B3%DB%8C%D8%AC--embed-message)
+
 
 # ❕ چطور یک ربات بسازیم
 
@@ -500,9 +518,7 @@ client.login(token);
 
 - MessageActionRow چیه؟
 	- شما که قرار نیست همیشه جواب دستورات رو با یه پیام خشک و خالی بدید!
-	- MessageActionRow بهتون کمک میکنه که بتونید چیزای بیشتری رو در کنار یا بجای پیام استفاده بکنید
-	- مثل امبد مسیج ها دکمه ها منو ها و غیره
-	- یسری از اونا رو الان این پایین براتون توضیح میدم
+	- MessageActionRow بهمون کمک میکنه که بتونیم چیزای جالبی رو مثل دکمه هارو به پیام های خودمون اضافه بکنیم و ازشون استفاده بکنیم
 
 <br>
 
@@ -565,8 +581,246 @@ https://user-images.githubusercontent.com/69610848/129451238-1d303c18-92a1-4a82-
 
 
 
+# 🔳 دکمه / button
+
+- دکمه ها میتونن خیلی مفید باشن و استفاده ازشون کلی حال میده 
+	- بریم ببنیم با دکمه ها میشه چیکار کرد و نکته هارو هم بهتون بگم
+
+اول مثل همیشه توی فولدر ``commands`` یه فایل برای دستور میسازیم که اینجا من اسمشو میزارم ``button.js``
+
+<br>
+
+بعد از اون میایم و کد پایین رو توی فایل قرار میدیم
+
+<div dir="ltr">
+
+```javascript
+const { MessageActionRow, MessageButton } = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('button')
+		.setDescription('dokme ha'),
+	async execute(interaction) {
+        // button
+		const row = new MessageActionRow()
+        .addComponents(
+            new MessageButton()
+                .setCustomId('primary')
+                .setLabel('test')
+                .setStyle('PRIMARY'),
+        );
+
+		return interaction.reply({content: 'tada!', components: [row]});
+	},
+};
+```
+
+</div>
+
+- بعد از این فقط کافیه فایل رو سیو بکنیم و یبار کامند های سرور رو با فایل ``register-command.js`` ذخیره بکنیم و ربات رو ران کنیم
+	- ``node bot.js``
+
+	VIDEO HERE!!!
 
 
+<br>
+
+- 🔵 **بعضی از مواقع هم میخایم که دکمه غیر فعال باشه و قابل فشار دادن نباشه پس میایم این کار میکنیم**
+	- ``.setDisabled(true)``
+
+<div dir="ltr">
+
+```javascript
+// button
+.addComponents(
+    new MessageButton()
+        .setCustomId('primary')
+	    .setLabel('test')
+        .setStyle('PRIMARY')
+        .setDisabled(true),
+        );
+```
+
+</div>
+
+- 😃 **نظرت راجب یه ایموجی به همراه دکمه چیه؟**
+	- ``.setEmoji()``
+
+🔷 **ایموجی ساده**
+
+<div dir="ltr">
+
+```javascript
+.addComponents(
+    new MessageButton()
+        .setCustomId('primary')
+        .setLabel('test')
+        .setStyle('PRIMARY')
+		.setEmoji('🎉'),
+        );
+```
+
+</div>
+
+🔷 **سرور ایموجی**
+
+<div dir="ltr">
+
+```javascript
+.addComponents(
+    new MessageButton()
+        .setCustomId('primary')
+        .setLabel('test')
+        .setStyle('PRIMARY')
+		.setEmoji('emojiID'),
+        );
+```
+
+</div>
+
+- ⚠ حتما هم حواستون باشه که بات توی اون سرور که ایموجی مال اونه باشه
+
+<br>
+
+# 💂‍♂️ کالکتور
+
+- 🔄 **عملکرد در اثر فشرده شده**
+
+
+- رسیدیم به بحث اصلی که توی اون باید دکمه ها بعد از فشرده شدن یک کار رو برای ما انجام بدن
+	- **و ما اینجا برای این کار از کالکتور استفاده میکنیم**
+		- کالکتور چیه؟
+		-بیاین اینطوری فرض بکنیم که کالکتور یه نگهبانه که ما میزاریمش یه تایم خاصی حواسش به یه چیزی باشه
+		- من الان به طور مثال برای فایل ``button.js`` یه کالکتور میسازم
+
+
+<div dir="ltr">
+
+```javascript
+const { MessageActionRow, MessageButton } = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('button')
+		.setDescription('dokme ha'),
+	async execute(interaction) {
+        // button
+		const row = new MessageActionRow()
+        .addComponents(
+            new MessageButton()
+                .setCustomId('primary')
+                .setLabel('test')
+                .setStyle('PRIMARY')
+                .setEmoji('851588633421152267'),
+                );
+// collector
+const filter = i => i.customId === 'primary' && i.user.id === '575933571186032641';
+
+const collector = interaction.channel.createMessageComponentCollector({ filter, time: 15000 });
+
+collector.on('collect', async i => {
+    if (i.customId === 'primary') {
+        await i.update({ content: 'dokme click shod!', components: [] });
+    }
+});
+
+collector.on('end', collected => console.log(`Collected ${collected.size} items`));
+
+
+        // send message and button
+		return interaction.reply({content: 'tada!', components: [row]});
+	},
+};
+```
+
+</div>
+
+- **توضیح چنتا نکته از کد بالا و قسمت کالکتور اون:**
+	- ما معمولا برای این از متد ``.setCustomId()`` داخل دکمه ها استفاده میکنیم چون قراره از اون ایدی توی کالکتور برای شناسایی استفاده بشه
+	- و ما در بخش کالکتور اول از همه میایم یه فیلتر میزاریم به این صورت که بیاد دکمه رو به ایدی و ایدی یوزری که اونو فشار میده فیلتر میکنه کارکردش رو
+	- ``const filter = i => i.customId === 'primary' && i.user.id === '575933571186032641';``
+	- البته برای یوزر ایدی دی کد بالا حتما نیاز نیست که ایدی رو دستی وارد بکنیم و میتونید از مثال پایین استفاده بکنید که به صورت خودکار ایدی اون فردی که از دستور استفاده کرده رو درنظر بگیره
+	- ``const filter = i => i.customId === 'primary' && i.user.id === interaction.user.id;``
+	- و در قسمت collector هم یک کالکتور ساخته میشه با فیلتر هایی که تعریف کردیم و تایم ``15000`` که به میلی ثانیه هست و میشه ``15`` ثانیه و یعنی بعد از 15 ثانیه این کالتور تموم میشه
+	- و در اخر هم کد زیر وجود داره که میاد بعد از تموم شدن تایم محاسبه میکنه که چند تا دکمه از کالکتور کلیک شده
+	- ``collector.on('end', collected => console.log(`Collected ${collected.size} items`));``
+
+VIDEO HERE!!!
+
+
+-  **استایل دکمه ها**
+
+
+- در کل 5 تا استایل دکمه وجود داره
+	- ``PRIMARY``
+	- ``SECONDARY``
+	- ``SUCCESS``
+	- ``DANGER``
+	- ``LINK``
+
+
+- ⚪ **در قالب یه کامند دیگه همشون رو براتون این زیر یه مثال میزنم**
+	- ``buttons.js``
+
+
+<div dir="ltr">
+
+```javascript
+const { MessageActionRow, MessageButton } = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('buttons')
+		.setDescription('tamam style haye dokme ha'),
+	async execute(interaction) {
+        // buttons
+		const row = new MessageActionRow()
+        .addComponents(
+                new MessageButton()
+                .setCustomId('1')
+                .setLabel('PRIMARY button')
+                .setStyle('PRIMARY'),
+                                
+
+                new MessageButton()
+                .setCustomId('2')
+                .setLabel('SECONDARY button')
+                .setStyle('SECONDARY'),
+
+
+                new MessageButton()
+                .setCustomId('3')
+                .setLabel('SUCCESS button')
+                .setStyle('SUCCESS'),
+
+
+                new MessageButton()
+                .setCustomId('4')
+                .setLabel('DANGER button')
+                .setStyle('DANGER'),
+
+
+                new MessageButton()
+                .setLabel('LINK button')
+                .setUrl('https://github.com/ali0sam/discord-guide-fa')
+                .setStyle('LINK'),
+                );
+
+
+ // send message and button
+ return interaction.reply({content: 'style ha!', components: [row]});
+},
+};
+```
+
+</div>
+
+
+> - ❗ **یه نکته هم اینجا هست اینه که دکمه های استایل ``LINK`` نباید ``setCustomId().`` داشته باشن و فقط میتونید از ``setUrl().`` توش استفاده بکنید**
 
 
 
