@@ -819,7 +819,7 @@ module.exports = {
 
                 new MessageButton()
                 .setLabel('LINK button')
-                .setUrl('https://github.com/ali0sam/discord-guide-fa')
+                .setURL('https://github.com/ali0sam/discord-guide-fa')
                 .setStyle('LINK'),
                 );
 
