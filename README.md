@@ -518,6 +518,84 @@ client.login(token);
 * **انتقال متغیر های مودرنیاز به یک فایل جدا و فراخونی اونا به درون کد های اصلی**
 * **جدا کردن دستورات و اتقال اونها به یک پوشه ای جدا و فایل های جدا برای مدیریت و نظم بهتر**
 
+# ⚙ Event handler / ایونت هندلر
+
+- **دقیقا مثل کامند هندلر که ما بالا برای مدیریت بهتر دستورات ساختیم الان میخایم یدونه از اون برای ایونت ها بسازیم**
+
+
+- اول از همه یه فولدر به نام ``events`` میسازیم
+	- بعد از اون یه فایل درون اون میسازیم به نام ``command-use.js``
+	- و بعدش کد پایین رو درون اون قرار میدیم 
+
+<div dir="ltr">
+
+```javascript
+module.exports = {
+	name: 'interactionCreate',
+	execute(interaction) {
+		console.log(`${interaction.user.tag} in #${interaction.channel.name} triggered an interaction.`);
+	},
+};
+```
+
+</div>
+
+ما در ایونت بالا اومدیم تعریف کردیم که هر وقت یه ``interaction`` به وجود اومد بیاد توی کنسول بهمون بگه چه کسی از اون استفاده کرده و در کدوم چنل
+
+
+- ❓ ``interaction`` ها همون عکس العمل هایی هستن که بات به دستورات ما نشون میده!
+
+فایل بالا رو سیو میکنیم و میریم سراغ فایل اصلی بات یعنی ``bot.js``
+
+- و این بخش رو به فایل اضافه میکنیم
+
+<div dir="ltr">
+
+```javascript
+// events
+
+const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
+
+for (const file of eventFiles) {
+	const event = require(`./events/${file}`);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	} else {
+		client.on(event.name, (...args) => event.execute(...args));
+	}
+};
+```
+
+</div>
+
+- بعد از این میتونیم ربات رو ران بکنیم و ببنیم که ایونتی که ساختیم کار میکنه یا نه
+
+	- node bot.js
+
+
+VIDEO HERE!!!
+
+
+
+- و ما حتی میتونیم دیگه از این به بعد وقتی بات استارت میشه با یه ایونت توی فولدر ``events`` متوجه بشیم و دیگه نیازی نیستش پیام ready رو توی فایل اصلی بزاریم و تعریف بکنیم
+	- ``ready.js``
+
+<div dir="ltr">
+
+```javascript
+module.exports = {
+	name: 'ready',
+	once: true,
+	execute(client) {
+		console.log(`Ready! Logged in as ${client.user.tag} from ready.js in events folder!`);
+	},
+};
+```
+
+</div>
+
+
+
 # 🚲 MessageActionRow
 
 - MessageActionRow چیه؟
@@ -760,6 +838,28 @@ collector.on('end', collected => console.log(`Collected ${collected.size} items`
 	- و در اخر هم کد زیر وجود داره که میاد بعد از تموم شدن تایم محاسبه میکنه که چند تا دکمه از کالکتور کلیک شده
 	- ``collector.on('end', collected => console.log(`Collected ${collected.size} items`));``
 
+<br>
+<br>
+
+و توی این قسمت شما نیاز نیست حتما از ``update`` استفاده بکنید و میتونید متد های دیگه هم استفاده بکنید
+
+``await i.update({ content: 'dokme click shod!', components: [] })``
+
+<div dir="ltr">
+
+- ``reply()``
+- ``editReply()``
+- ``deferReply()``
+- ``fetchReply()``
+- ``deleteReply()``
+- ``followUp()``
+
+</div>
+
+
+
+
+
 
 https://user-images.githubusercontent.com/69610848/129632141-4c500d0f-9108-469b-9ae6-012ca5a36d84.mp4
 
@@ -839,14 +939,209 @@ https://user-images.githubusercontent.com/69610848/129632247-96c5b553-a8e2-4ab3-
 > - ❗ **یه نکته هم اینجا هست اینه که دکمه های استایل ``LINK`` نباید ``setCustomId().`` داشته باشن و فقط میتونید از ``setUrl().`` توش استفاده بکنید**
 
 
+# select menu / منو ها
+
+- برای ساخت یه کامند که به ما منو نشون بده من اول یه فایل توی پوشه ``commands`` میسازیم به نام ``menu.js``
+	- و کد زیر رو توش وارد میکنیم
+
+<div dir="ltr">
+
+```javascript
+const { MessageActionRow, MessageSelectMenu } = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('menu')
+		.setDescription('neshon dadan menu'),
+	async execute(interaction) {
+        
+        const row = new MessageActionRow()
+        .addComponents(
+            new MessageSelectMenu()
+                .setCustomId('select')
+                .setPlaceholder('inja click kon')
+                .addOptions([
+                    {
+                        label: 'Select me',
+                        description: 'This is a description',
+                        value: 'first_option',
+                    },
+                    {
+                        label: 'You can select me too',
+                        description: 'This is also a description',
+                        value: 'second_option',
+                    },
+                ]),
+        );
+
+    await interaction.reply({ content: 'Menu!', components: [row] });
+
+    },
+};
+```
+
+</div>
+
+VIDEO HERE!!!
 
 
 
+- ⚪ نوع دوم منو ها رو میشه دونه دونه میشه سلکت کرد و در اخر ریکوعست رو داد
+	- ``menu2.js``
+
+<div dir="ltr">
+
+```javascript
+const { MessageActionRow, MessageSelectMenu } = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('menu2')
+		.setDescription('neshon dadan Multi-select menus'),
+	async execute(interaction) {
+
+        const row = new MessageActionRow()
+			.addComponents(
+				new MessageSelectMenu()
+					.setCustomId('select')
+					.setPlaceholder('Nothing selected')
+					.setMinValues(2)
+					.setMaxValues(3)
+					.addOptions([
+						{
+							label: 'Select me',
+							description: 'This is a description',
+							value: 'first_option',
+						},
+						{
+							label: 'You can select me too',
+							description: 'This is also a description',
+							value: 'second_option',
+						},
+						{
+							label: 'I am also an option',
+							description: 'This is a description as well',
+							value: 'third_option',
+						},
+					]),
+			);
+
+    await interaction.reply({ content: 'Menu!', components: [row] });
+
+    },
+};
+```
+
+</div>
+
+
+- **عملکرد در اثر انتخاب**
+	- ما الان میخایم که فایل ``menu.js`` رو یکمی ادیت بدیم و بهش کالکتور اضافه بکنیم تا مثل دکمه ها وقتی یه اپشن رو از منو انتخواب میکنیم بهمون جواب بده
+
+
+<div dir="ltr">
+
+```javascript
+const { MessageActionRow, MessageSelectMenu } = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('menu')
+		.setDescription('neshon dadan menu'),
+	async execute(interaction) {
+
+        const row = new MessageActionRow()
+        .addComponents(
+            new MessageSelectMenu()
+                .setCustomId('select')
+                .setPlaceholder('inja click kon')
+                .addOptions([
+                    {
+                        label: 'Select me',
+                        description: 'This is a description',
+                        value: 'first_option',
+                    },
+                    {
+                        label: 'You can select me too',
+                        description: 'This is also a description',
+                        value: 'second_option',
+                    },
+                ]),
+        );
+
+    await interaction.reply({ content: 'Menu!', components: [row] });
+
+
+// collector
+const filter = i => i.customId === 'select' && i.user.id === interaction.user.id;
+
+const collector = interaction.channel.createMessageComponentCollector({ filter, time: 15000 });
+
+collector.on('collect', async i => {
+	if (i.values[0] === 'first_option') {
+		await i.update({ content: 'shoma option 1 ro select kardid!', components: [] });
+	}
+});
+
+collector.on('end', collected => console.log(`Collected ${collected.size} items`));
+
+
+    },
+};
+```
+
+</div>
+
+
+- 🔷 توی کد بالا ما توی کالکتور تعریف کردیم که اگه اپشنی که انتخاب میشه value اون مساوی با ``first_option`` بود بیاد به ما یه پاسخ بده
+
+و توی این قسمت شما نیاز نیست حتما از ``update`` استفاده بکنید و میتونید متد های دیگه هم استفاده بکنید
+
+``await i.update({ content: 'shoma option 1 ro select kardid!', components: [] })``
+
+<div dir="ltr">
+
+- ``reply()``
+- ``editReply()``
+- ``deferReply()``
+- ``fetchReply()``
+- ``deleteReply()``
+- ``followUp()``
+
+</div>
 
 
 
   
   
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
 </div>

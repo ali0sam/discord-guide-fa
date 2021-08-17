@@ -6,11 +6,11 @@ const fs = require('fs');
 require("dotenv").config();
 let token = process.env.TOKEN
 
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-});
+
 
 client.commands = new Collection();
+
+// commands
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
@@ -35,6 +35,19 @@ client.on('interactionCreate', async interaction => {
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
 });
+
+// events
+
+const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
+
+for (const file of eventFiles) {
+	const event = require(`./events/${file}`);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	} else {
+		client.on(event.name, (...args) => event.execute(...args));
+	}
+};
 
 
 client.login(token);
