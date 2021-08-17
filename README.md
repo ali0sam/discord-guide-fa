@@ -47,6 +47,8 @@
 
 [📔 کانفیگ فایل / .env](https://github.com/ali0sam/discord-guide-fa#-%DA%A9%D8%A7%D9%86%D9%81%DB%8C%DA%AF-%D9%81%D8%A7%DB%8C%D9%84--env)
 
+[⚙ Event handler / ایونت هندلر](https://github.com/ali0sam/discord-guide-fa#-event-handler--%D8%A7%DB%8C%D9%88%D9%86%D8%AA-%D9%87%D9%86%D8%AF%D9%84%D8%B1)
+
 [🚲 MessageActionRow](https://github.com/ali0sam/discord-guide-fa#-messageactionrow)
 
 [📇 امبد مسیج / Embed Message](https://github.com/ali0sam/discord-guide-fa#-%D8%A7%D9%85%D8%A8%D8%AF-%D9%85%D8%B3%DB%8C%D8%AC--embed-message)
@@ -939,7 +941,7 @@ https://user-images.githubusercontent.com/69610848/129632247-96c5b553-a8e2-4ab3-
 > - ❗ **یه نکته هم اینجا هست اینه که دکمه های استایل ``LINK`` نباید ``setCustomId().`` داشته باشن و فقط میتونید از ``setUrl().`` توش استفاده بکنید**
 
 
-# select menu / منو ها
+# 📑 select menu / منو ها
 
 - برای ساخت یه کامند که به ما منو نشون بده من اول یه فایل توی پوشه ``commands`` میسازیم به نام ``menu.js``
 	- و کد زیر رو توش وارد میکنیم
