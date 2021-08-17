@@ -57,6 +57,8 @@
 
 [💂‍♂️ کالکتور](https://github.com/ali0sam/discord-guide-fa#%EF%B8%8F-%DA%A9%D8%A7%D9%84%DA%A9%D8%AA%D9%88%D8%B1)
 
+[📑 select menu / منو ها](https://github.com/ali0sam/discord-guide-fa#-select-menu--%D9%85%D9%86%D9%88-%D9%87%D8%A7)
+
 
 # ❕ چطور یک ربات بسازیم
 
