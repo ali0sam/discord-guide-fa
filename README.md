@@ -1120,11 +1120,108 @@ collector.on('end', collected => console.log(`Collected ${collected.size} items`
 
 </div>
 
+# 🛩 چند تا سوال و جواب
 
 
+# 🌀 اپشن های قابل استفاده در اسلش کامند
+
+
+<div dir="ltr">
+
+```javascript
+.addStringOption(option => option.setName('input').setDescription('Enter a string'))
+.addIntegerOption(option => option.setName('int').setDescription('Enter an integer'))
+.addNumberOption(option => option.setName('num').setDescription('Enter a number'))
+.addBooleanOption(option => option.setName('choice').setDescription('Select a boolean'))
+.addUserOption(option => option.setName('target').setDescription('Select a user'))
+.addChannelOption(option => option.setName('destination').setDescription('Select a channel'))
+.addRoleOption(option => option.setName('muted').setDescription('Select a role'))
+.addMentionableOption(option => option.setName('mentionable').setDescription('Mention something'));
+```
+
+</div>
+
+- **و جوری که میتونید اونارو به متغیر تبدیل بکنید که راحت تر باشید**
+
+<div dir="ltr">
+
+```javascript
+const string = interaction.options.getString('input');
+const integer = interaction.options.getInteger('int');
+const number = interaction.options.getNumber('num');
+const boolean = interaction.options.getBoolean('choice');
+const user = interaction.options.getUser('target');
+const member = interaction.options.getMember('target');
+const channel = interaction.options.getChannel('destination');
+const role = interaction.options.getRole('muted');
+const mentionable = interaction.options.getMentionable('mentionable');
+```
+
+</div>
+
+
+
+
+
+
+
+# ❔ چطور برای یک اسلش کامند اپشن بزاریم و اون رو دریافت بکنیم و نشون بدیم
+
+- من اینجا برای تست اول از همه یه فایل توی فولدر ``commands`` میسازم به نام ``callback.js``
+
+
+<div dir="ltr">
+
+```javascript
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('callback')
+        .setDescription('callback your text!')
+        .addStringOption(option =>
+            option.setName('text')
+                .setDescription('ek text baray callback vared konid')
+                .setRequired(true)
+        ),
+
+async execute(interaction) {
+    const text = interaction.options.getString('text');
+    await interaction.reply({content: `text vared shode tavasot shoma = [${text}]`, ephemeral: true})
+    }
+
+}
+```
+
+</div>
+
+- توی کد بالا ما اومدیم و یک استرینگ اپشن تعریف کردیم که بتونیم یه متن از طرف مقابل بگیریم و اپشن رو هم ``required`` تعریف کردیم که یوزر یه چیزی ارسال بکنه و کامند خالی نباشه (یکی از بزرگ ترین خوبی های اسلش کامند 😀)
+
+و بعد اومدیم توی دستور استرینگ رو به یک متغیر تبدیل کردیم که راحت توی کد ازش استفاده بکنیم و اسمشو گذاشتیم ``text``
+
+- بعدش هم خیلی راحت با ``{text}$`` ازش استفاده کردیم
+- مسیج رو هم ephemeral کردیم که فقط یوزر ببینه و چنل الکی شلوغ نشه
+
+
+VIDEO HERE!!!
   
-  
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
