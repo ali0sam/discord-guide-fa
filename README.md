@@ -577,7 +577,7 @@ for (const file of eventFiles) {
 	- node bot.js
 
 
-VIDEO HERE!!!
+https://user-images.githubusercontent.com/69610848/129795756-df8932d8-b2c2-4b77-a2f6-6835090d9fbc.mp4
 
 
 
@@ -988,7 +988,11 @@ module.exports = {
 
 </div>
 
-VIDEO HERE!!!
+
+
+https://user-images.githubusercontent.com/69610848/129795576-3c6813e4-096d-40b0-9ed6-00c8a3613e7e.mp4
+
+
 
 
 
@@ -1041,6 +1045,10 @@ module.exports = {
 ```
 
 </div>
+
+
+https://user-images.githubusercontent.com/69610848/129795622-b8d3b701-34a6-4ec7-a202-6ef98d0e16dc.mp4
+
 
 
 - **عملکرد در اثر انتخاب**
@@ -1121,6 +1129,9 @@ collector.on('end', collected => console.log(`Collected ${collected.size} items`
 </div>
 
 # 🛩 چند تا سوال و جواب
+
+https://user-images.githubusercontent.com/69610848/129795671-86d08a58-0065-4256-aa03-d15927393efb.mp4
+
 
 
 # 🌀 اپشن های قابل استفاده در اسلش کامند
