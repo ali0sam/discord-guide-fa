@@ -1215,7 +1215,8 @@ async execute(interaction) {
 - مسیج رو هم ephemeral کردیم که فقط یوزر ببینه و چنل الکی شلوغ نشه
 
 
-VIDEO HERE!!!
+https://user-images.githubusercontent.com/69610848/130154445-00ea308a-46f0-4c11-8db4-70d9d594cbb7.mp4
+
   
 
 
