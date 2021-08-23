@@ -1218,6 +1218,110 @@ async execute(interaction) {
 https://user-images.githubusercontent.com/69610848/130154445-00ea308a-46f0-4c11-8db4-70d9d594cbb7.mp4
 
   
+# ❔ چطور تعداد سرور های بات رو به دست بیاریم و اونو توی استاتوس نمایش بدیم
+
+
+- فایل ``ready.js``رو یادتونه؟ اینجا ما میخایم اول اونو یه ادیتی بدیم و بعد بریم سراغ 2 تا ایونت دیگه
+	- **ready.js**
+
+<div dir="ltr">
+
+```javascript
+module.exports = {
+	name: 'ready',
+	once: true,
+	execute(client) {
+		global.servers = client.guilds.cache.size
+		console.log(`Ready! Logged in as ${client.user.tag} from ready.js in events folder! and servers: ${client.guilds.cache.size}`);
+		client.user.setActivity(`${global.servers} servers`, { type: "WATCHING"})
+
+		
+		var checkservers = 5, checkthe_interval = checkservers * 60 * 1000; //in interval har 5 min check mishe va mitoind khodeton [5] ro ba harchi mikhayed change konid vali havaseton be api block discord bashe!
+		setInterval(function() {
+			client.user.setActivity(`${global.servers} servers`, { type: "WATCHING"})
+		}, checkthe_interval);
+	},
+};
+```
+
+</div>
+
+- 🔵 **توضیحات راجب کد بالا**
+	- اولیش اینکه شاید براتون سوال شده باشه که ``global.servers`` چیه و چرا ازش استفاده میکنیم؟
+	- ``global`` یه نوع متغیر گذاری توی ``node.js`` هست که به صورت همگانی میون فایل ها یه متغیر رو مشخص میکنیم یعنی من الان از این متغیر میتونم به صورت ``global.servers`` توی فایل های دیگه خودم هم استفاده بکنم که به درد میخوره
+	- 🔷 [اینجا چون ما نمیخواستیم الان وارد بحث دیتابیس بشیم من این کار رو کردم]
+		- و بعد از اون اومدم یه اکتیویتی روی سرور های فعلی بات ست کردم با 
+		- ``client.user.setActivity(`${global.servers} servers`, { type: "WATCHING"})``
+		- من توی کد بالا از تایپه ``WATCHING`` استفاده کردم شما میتونید از تایپ های زیر هم استفده کنید
+		- ``LISTENING``
+		- ``COMPETING``
+			- بعد از اون یه ``interval`` تعریف میکنم که یعنی یه فراینده لوپ و تکرار شونده و میگیم که هر 5 دقیقه اکتیویتی بروز بشه و دوباره ست بشه که اگه بات توی 5 دقیقه به سرور های جدیدی اضافه شد و یا از سروری حذف شد تعداد به روز شده رو به ما نشون بده
+
+
+- بعد از ادیت کردن فایل ``ready.js`` 2 عدد فایل جدید میسازیم توی پوشه ``events``
+
+- **invite-guild.js**
+
+<div dir="ltr">
+
+```javascript
+module.exports = {
+	name: 'guildCreate',
+	execute(guild) {
+        servers = global.servers + 1
+		console.log(`bot be ek server jadid ba id [${guild.id}] invite shod!, servers count: ${servers}`);
+	},
+};
+```
+
+</div>
+
+
+- **remove-guild.js**
+
+<div dir="ltr">
+
+```javascript
+module.exports = {
+	name: 'guildDelete',
+	execute(guild) {
+        servers = global.servers - 1
+		console.log(`bot az ek server remove shod, [${guild.id}], servers count: ${servers}`);
+	},
+};
+```
+
+</div>
+
+
+- 🔵 **توی 2 تا ایونت بالا چنتا کار کردیم**
+	- دیگه هر وقت که بات توی سرور جدیدی اینوایت بشه و یا از سرور بیرون بشه لاگ میشه . که حالا من برای تست که فقط نشون بدم گذاشتم روی لاگ و شما میتونید کار های دیگه بکنید
+	- و از اون ``global.servers`` که توی فایل ``ready.js`` گذاشتیم استفاده کردیم و هر وقت به طور مثال بات به سروری اضافه میشه اونو به علاوه 1 میکنیم و لاگ میکنیم و برای ریمو سرور و هم برعکس
+
+
+VIDEO HERE!!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
