@@ -59,6 +59,8 @@
 
 [📑 select menu / منو ها](https://github.com/ali0sam/discord-guide-fa#-select-menu--%D9%85%D9%86%D9%88-%D9%87%D8%A7)
 
+[🛩 چند تا سوال و جواب](https://github.com/ali0sam/discord-guide-fa/blob/main/README.md#-%DA%86%D9%86%D8%AF-%D8%AA%D8%A7-%D8%B3%D9%88%D8%A7%D9%84-%D9%88-%D8%AC%D9%88%D8%A7%D8%A8)
+
 
 # ❕ چطور یک ربات بسازیم
 
