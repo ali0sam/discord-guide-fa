@@ -1299,7 +1299,9 @@ module.exports = {
 	- و از اون ``global.servers`` که توی فایل ``ready.js`` گذاشتیم استفاده کردیم و هر وقت به طور مثال بات به سروری اضافه میشه اونو به علاوه 1 میکنیم و لاگ میکنیم و برای ریمو سرور و هم برعکس
 
 
-VIDEO HERE!!!
+https://user-images.githubusercontent.com/69610848/130449017-23ae36d5-d288-4af3-bbd9-057ea18e78a1.mp4
+
+
 
 
 
