@@ -58,7 +58,7 @@ fs.readdirSync("./config/events/")
 
 /**
  * in code ro man test kardam va error ee nagreftam
- * age shoma error gereftin ya comment bezarin ya biayin pv discord am
+ * age shoma error gereftin biayin pv discord am
  * Discord ID: Mahraam#8435
  * merci az ali ke hamchin document ee
  */
