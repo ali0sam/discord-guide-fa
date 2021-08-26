@@ -1304,6 +1304,62 @@ module.exports = {
 https://user-images.githubusercontent.com/69610848/130449017-23ae36d5-d288-4af3-bbd9-057ea18e78a1.mp4
 
 
+# ❔ چطور به یک یوزر دایرکت مسیج ارسال کنیم
+
+
+خب به صورت کلی این کار خیلی سادس و فقط کافیه یه همچین کار بکنیم
+
+<div dir="ltr">
+
+```javascript
+const user = client.users.cache.get('id');
+user.send('the text!');
+```
+
+</div>
+
+- و اگه هم بخاید توی اسلش کامند به فردی که کامند رو یوز کرده دی ام بدید میشه
+	- ``interaction.user.send('the text!')``
+
+
+- **ولی اگه بخایم این کار رو به صورت یک کامند در بیاریم مثالش میشه کد زیر**
+
+
+<div dir="ltr">
+
+```javascript
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('dm')
+        .setDescription('dm be ek user.')
+        // options
+        .addUserOption(option =>
+            option.setName('targetuser')
+            .setDescription('ek user ra entekhab konid baray DM!')
+            .setRequired(true)
+            )
+            .addStringOption(option =>
+                option.setName('text')
+                    .setDescription('text khod ra varid konid')
+                    .setRequired(true)
+            ),
+            
+
+async execute(interaction) {
+    const mem = interaction.options.getUser('targetuser')
+    const text = interaction.options.getString('text');
+    mem.send(text);
+    await interaction.reply({content: 'text shoma ersal shod be DM!', ephemeral: true});
+    }
+
+}
+```
+
+</div>
+
+
 
 
 
