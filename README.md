@@ -1323,6 +1323,8 @@ user.send('the text!');
 
 
 - **ولی اگه بخایم این کار رو به صورت یک کامند در بیاریم مثالش میشه کد زیر**
+	- folder: ``commands``
+		- file: ``dm.js``
 
 
 <div dir="ltr">
