@@ -1412,8 +1412,9 @@ async execute(interaction) {
 - و یبار هم فایل ``register-command.js`` رو ران میکنیم که دستور به سرور اضافه بشه و  بعدی میریم سراغ تست
 
 
+https://user-images.githubusercontent.com/69610848/131377105-2ed7d620-3803-4ae9-8855-299b5ca11e76.mp4
 
-VIDEO HERE!!!
+
 
 
 
