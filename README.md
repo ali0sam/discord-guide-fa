@@ -10,7 +10,7 @@
 </div>
 
 # 📃پیش نیاز ها
-
+* دونستن مفاهیم پایه جاوا اسکریپت
 * [Node.js v16+](https://nodejs.org/en/download/releases/)
 * [Discord.js](https://www.npmjs.com/package/discord.js)
 * [dotenv](https://www.npmjs.com/package/dotenv)
@@ -1362,17 +1362,58 @@ async execute(interaction) {
 </div>
 
 
+# ❔ چطور به یک ممبر با دستور رول بدیم
+
+
+با استفاده از اسلش کامند و اپشن هاش این کار خیلی اسونه
+
+- ❕ (البته بدون درنظر گرفت اینکه این کامند اینجوری شاید باقی نمونه و باید توش ادیت بدید و چنتا شرط اضافه بکنید)
+
+
+طبق روال معمول توی پوشه ``commands`` یک فایل میسازیم که اینجا من اسمشو گذاشتم ``giverole.js``
+
+
+**و کد زیر رو توش وارد میکنیم**
+
+<div dir="ltr">
+
+```javascript
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('giverole')
+        .setDescription('the add role command')
+        .addUserOption(option =>
+            option.setName('member')
+                .setDescription('ek user to entekhab konid')
+                .setRequired(true)
+        )
+        .addRoleOption(option => 
+            option.setName('role')
+                .setDescription('ek role ra entekhab konid')
+                .setRequired(true)
+        ),
+
+async execute(interaction) {
+    const member = interaction.options.getMember('member');
+    const role = interaction.options.getRole('role');
+    member.roles.add(role)
+    await interaction.reply({content: 'be user role dade shod', ephemeral: true})
+    }
+
+}
+```
+
+</div>
+
+
+- و یبار هم فایل ``register-command.js`` رو ران میکنیم که دستور به سرور اضافه بشه و  بعدی میریم سراغ تست
 
 
 
-
-
-
-
-
-
-
-
+VIDEO HERE!!!
 
 
 
