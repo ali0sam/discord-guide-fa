@@ -1144,7 +1144,8 @@ collector.on('end', collected => console.log(`Collected ${collected.size} items`
 			- و بعدش از توی قسمت ``Webhooks`` بزنید روی گزینه ``Create Webhook``
 
 
-VIDEO HERE!!!
+
+https://user-images.githubusercontent.com/69610848/132132731-baab9939-df9d-4b4d-bbf8-82985c475c80.mp4
 
 
 - بعد از ساخت وب هوک میتونید براش یه اسم دلخواه بزارید یا اواتار ولی نکته اصلی اینه که یه لینک ساخته میشه که توی اون دیتا های وب هوکی که ساختید رو میده و میتونید توکن و ایدی وب هوک رو کپی کنید
