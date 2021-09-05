@@ -1130,6 +1130,131 @@ collector.on('end', collected => console.log(`Collected ${collected.size} items`
 
 </div>
 
+# 📑 webhook / وب هوک
+
+- **وب هوک چیه؟**
+	- به صورت کلی یه سیستمه که بااستفاده از اون اطلاعات رو بین اپ های دیگه انتقال میدن
+		- مثلا انتقال رسید های پی پال شما به یک وب هوک که متوجه بشید و یا انتقال دیتا هایی که توی پروژه گیتهاب خودتون عوض کردید به یک وب هوک
+			- ❕ ``صد درصد من نمیتونم با همچین توضیحات کوتاهی بتونم کل متحوا رو برسونم پس بهتره خودتون هم سرچ داشته باشید``
+
+
+- **ساخت وب هوک توی دیسکورد**
+	- اول از همه وارد حالت ادیت یک تکست چنل بشید
+		- بعد قسمت ``Integrations`` رو باز بکنید
+			- و بعدش از توی قسمت ``Webhooks`` بزنید روی گزینه ``Create Webhook``
+
+
+VIDEO HERE!!!
+
+
+- بعد از ساخت وب هوک میتونید براش یه اسم دلخواه بزارید یا اواتار ولی نکته اصلی اینه که یه لینک ساخته میشه که توی اون دیتا های وب هوکی که ساختید رو میده و میتونید توکن و ایدی وب هوک رو کپی کنید
+
+
+- **با استفاده از ``discord.js`` ما 2 تا راه داریم که یه پیام رو به یک وب هوک ارسال بکنیم**
+
+<details>
+ <summary>WebhookClient</summary>
+ این روش برای وقتی هستش که میخاید یه کد بنویسید که فقط به وب هوک دیتا ارسال بکنه و نمیخاید اصلا با بات کار رو انجام بدید
+</details>
+
+<details>
+ <summary>BotClient</summary>
+ این روش هم مال وقتیه که میخاید با استفاده از یه بات به یک وبهوک دیتا ارسال کنید
+</details>
+
+
+- **WebhookClient Example**
+
+<div dir="ltr">
+
+```javascript
+const { MessageEmbed, WebhookClient } = require('discord.js');
+const { webhookId, webhookToken } = require('./config.json');
+
+const webhookClient = new WebhookClient({ id: webhookId, token: webhookToken });
+
+const embed = new MessageEmbed()
+	.setTitle('Some Title')
+	.setColor('#0099ff');
+
+webhookClient.send({
+	content: 'Webhook test',
+	username: 'some-username',
+	avatarURL: 'https://i.imgur.com/AfFp7pu.png',
+	embeds: [embed],
+});
+```
+
+</div>
+
+- 🔷 TIP / نکته
+
+<br>
+
+**توی وب هوک کلاینت ما میتونید به 2 حالت توکن و ایدی رو تعریف بکنید**
+
+<div dir="ltr">
+
+```javascript
+const webhookClient = new WebhookClient({ id: 'id', token: 'token' });
+```
+
+</div>
+
+**یا همون لینکی که کپی کردید رو مستقیم وارد میکنید مثل مثال زیر**
+<br>
+
+<div dir="ltr">
+
+```javascript
+const webhookClient = new WebhookClient({ url: 'https://discord.com/api/webhooks/id/token' });
+```
+
+</div>
+
+<br>
+
+- **BotClient Example**
+
+<div dir="ltr">
+
+```javascript
+const { Client, Intents, MessageEmbed } = require('discord.js');
+const { token } = require('./config.json');
+
+const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+
+const embed = new MessageEmbed()
+	.setTitle('Some Title')
+	.setColor('#0099ff');
+
+client.once('ready', async () => {
+	const channel = client.channels.cache.get('123456789012345678');
+	try {
+		const webhooks = await channel.fetchWebhooks();
+		const webhook = webhooks.first();
+
+		await webhook.send({
+			content: 'Webhook test',
+			username: 'some-username',
+			avatarURL: 'https://i.imgur.com/AfFp7pu.png',
+			embeds: [embed],
+		});
+	} catch (error) {
+		console.error('Error trying to send a message: ', error);
+	}
+});
+
+client.login(token);
+```
+
+</div>
+
+- ❗ **کد بالا با بات کلاینت عمل میکنه و میاد بر اساس اون ایدی چنلی که بهش دادید میاد اولین وب هوک اون رو مشخص میکنه و یه امبد مسیج میفرسته اونجا و این یه کد ایندکس ساده هست نه اسلش کامند**
+
+
+
+
 # 🛩 چند تا سوال و جواب
 
 https://user-images.githubusercontent.com/69610848/129795671-86d08a58-0065-4256-aa03-d15927393efb.mp4
